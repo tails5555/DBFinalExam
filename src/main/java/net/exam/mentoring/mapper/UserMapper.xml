@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+             "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.exam.mentoring.mapper.UserMapper">
+
+  <select id="findOne" resultType="User">
+    SELECT * FROM User WHERE id=#{id}
+  </select>
+  <select id="findAll" resultType="User">
+  	<bind name="start" value="(pg-1)*sz"/>
+  	SELECT u.id id, u.userType, s.studentNumber studentNumber, s.name studentName, s.grade grade, d.departmentName departmentName
+	FROM User u LEFT JOIN Student s ON u.id=s.userId LEFT JOIN Department d ON s.departmentId=d.id
+	<if test="sb == 1">WHERE INSTR(s.studentNumber, #{st})>0</if>
+	<if test="sb == 2">WHERE INSTR(s.name, #{st})>0</if>
+	<if test="sb == 3">WHERE INSTR(d.departmentName, #{st})>0</if>
+	<if test="sb == 4">WHERE INSTR(u.userType, #{st})>0</if>
+	ORDER BY
+		<choose>
+			<when test="ob == 1">studentNumber</when>
+			<when test="ob == 2">studentNumber DESC</when>
+			<when test="ob == 3">studentName</when>
+			<when test="ob == 4">studentName DESC</when>
+			<when test="ob == 5">grade</when>
+			<when test="ob == 6">grade DESC</when>
+			<when test="ob == 7">departmentName</when>
+			<when test="ob == 8">departmentName DESC</when>
+			<otherwise>id</otherwise>
+		</choose>
+	LIMIT ${start}, ${sz}
+  </select>
+  <select id="count" resultType="int">
+  	SELECT COUNT(u.id)
+	FROM User u LEFT JOIN Student s ON u.id=s.userId LEFT JOIN Department d ON s.departmentId=d.id
+	<if test="sb == 1">WHERE INSTR(s.studentNumber, #{st})>0</if>
+	<if test="sb == 2">WHERE INSTR(s.name, #{st})>0</if>
+	<if test="sb == 3">WHERE INSTR(d.departmentName, #{st})>0</if>
+	<if test="sb == 4">WHERE INSTR(u.userType, #{st})>0</if>
+  </select>
+  <select id="findLastUser" resultType="User">
+  	SELECT * FROM User ORDER BY id DESC LIMIT 1
+  </select>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+  	INSERT INTO User(userType, password)
+  	VALUES(#{userType}, #{password})
+  </insert>
+  <update id="updateType">
+  	UPDATE User
+  	SET userType=#{userType}
+  	WHERE id=#{id}
+  </update>
+</mapper>
