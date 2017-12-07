@@ -10,4 +10,8 @@ public class Mento {
 	java.util.Date applicationDate;
 	int studentId;
 	String mentoName;
+	String phoneNumber;
+	String email;
+	int grade;
+	String departmentName;
 }

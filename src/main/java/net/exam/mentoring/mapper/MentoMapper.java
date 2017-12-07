@@ -9,5 +9,6 @@ import net.exam.mentoring.dto.Mento;
 @Mapper
 public interface MentoMapper {
 	List<Mento> findAll();
+	Mento findOne(int id);
 	void insert(Mento mento);
 }

@@ -22,6 +22,16 @@ public class MentoService {
 	public List<Mento> findAll(){
 		return mentoMapper.findAll();
 	}
+	public boolean isMento(int id) {
+		Mento mento=mentoMapper.findOne(id);
+		Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+		Student student=studentMapper.findByStudentNumber(authentication.getName());
+		if(mento.getStudentId()==student.getId()) return true;
+		else return false;
+	}
+	public Mento findOne(int id) {
+		return mentoMapper.findOne(id);
+	}
 	public void insert(Mento mento) {
 		Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
 		Student student=studentMapper.findByStudentNumber(authentication.getName());

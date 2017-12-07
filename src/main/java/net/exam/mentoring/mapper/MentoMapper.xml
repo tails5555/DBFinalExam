@@ -7,6 +7,14 @@
   <select id="findAll" resultType="Mento">
     SELECT m.*, s.name mentoName FROM Mento m LEFT JOIN Student s ON m.studentId=s.id
   </select>
+  <select id="findOne" resultType="Mento">
+  	SELECT m.*, s.name mentoName, s.phoneNumber phoneNumber, s.email email, s.grade grade, d.departmentName departmentName
+  	FROM Mento m LEFT JOIN Student s
+  	ON m.studentId=s.id
+  	LEFT JOIN Department d
+  	ON s.departmentId=d.id
+  	WHERE m.id=#{id}
+  </select>
   <insert id="insert" useGeneratedKeys="true" keyProperty="id">
   	INSERT INTO Mento(teamName, advertiseContext, subject, qualificContext, studentId)
   	VALUES(#{teamName}, #{advertiseContext}, #{subject}, #{qualificContext}, #{studentId})

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+             "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.exam.mentoring.mapper.MentiMapper">
+	<select id="findByMentoId" resultType="Menti">
+		SELECT m.studentId, s.studentNumber, s.name studentName, s.email, s.phoneNumber, s.grade
+		FROM Menti m LEFT JOIN Student s
+		ON m.studentId=s.id
+		WHERE m.mentoId=#{mentoId}
+	</select>
+	<insert id="insert">
+		INSERT INTO Menti(mentoId, studentId)
+		VALUES(#{mentoId}, #{studentId})
+	</insert>
+	<delete id="delete">
+		DELETE FROM Menti
+		WHERE mentoId=#{mentoId} AND studentId=#{studentId}
+	</delete>
+</mapper>
