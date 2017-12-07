@@ -10,7 +10,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${R}res/common.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
@@ -22,9 +21,23 @@
       .page{
       	text-align : center;
       }
+      .userEntity{
+	      padding-left : 5px;
+	      padding-right : 5px;
+	      padding-top : 5px;
+	      padding-bottom : 5px;
+	      border : 1px solid #A4A4A4;
+	      background-color : #D8D8D8;
+	      font-weight : bold;
+	      text-align : center;
+	  }
+	  .userValue{
+	      padding-left : 5px;
+	      padding-right : 5px;
+	      padding-top : 5px;
+	      padding-bottom : 5px;
+	  }
     </style>
-
-    <script src="${R}res/common.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -47,48 +60,39 @@
    </div>
    <br/>
    <div class="container">
-   		<h1><strong>회원 목록 검색</strong></h1>
-   		<hr/>
-   		<div class="search">
-          <form:form method="get" modelAttribute="pagination" class="form-inline">
-          	<form:select path="ob" class="form-control autosubmit" itemValue="value" itemLabel="label" items="${ orderBy }"/>
-          	<form:select path="sb" class="form-control" itemValue="value" itemLabel="label" items="${ searchBy }"/>
-            <form:input path="st" class="form-control" placeholder="검색할 문자열" />
-            <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"> 검색하기</i></button>
-            <c:if test="${ pagination.sb > 0 || pagination.ob > 0}">
-		      <a class="btn btn-default" href="userList?&pg=1">
-		        <i class="glyphicon glyphicon-ban-circle"></i> 검색취소</a>
-		    </c:if>      
-          </form:form>
-       	</div>
-	   <table class="table table-bordered">
-	        <thead>
-	          <tr class="info">
-	            <th><center>학번</center></th>
-	            <th><center>학과</center></th>
-	            <th><center>이름</center></th>
-	            <th><center>학년</center></th>
-	            <th><center>회원 종류</center></th>
-	          </tr>
-	        </thead>
-	        <tbody>
-	        	<c:forEach var="user" items="${users }">
-	        		<tr data-url="userView?id=${ user.id }&${pagination.queryString}">
-	        			<td><center>${ user.studentNumber }</center></td>
-	        			<td><center>${ user.departmentName }</center></td>
-	        			<td><center>${ user.studentName}</center></td>
-	        			<td><center>${ user.grade }</td>
-	        			<td><center>${ user.userType }</center>
-	        		</tr>
-	        	</c:forEach>
-	        </tbody>
-	     </table>
-	     <div class="page">
-          	<my:pagination pageSize="${ pagination.sz }" recordCount="${ pagination.recordCount }" />
-         </div>
+   	<h1><strong>회원 목록 검색</strong> - 회원 정보</h1>
+   	<hr/>
+   	<div class="row">
+		<div class="col-md-12">
+          <!-- Introduction Row -->
+		  <table class="table table-bordered">
+            <tr>
+              <td rowspan="5">
+                <center><img class="img-thumbnail img-responsive" src="${R}img/mento_photo.jpg" width="200" height="200"/></center>
+              </td>
+              <td class="userEntity">학번(교번, 직번)</td>
+              <td class="userValue">${ student.studentNumber }</td>
+            	<td class="userEntity">이름</td>
+              <td class="userValue">${ student.studentName }</td>
+            </tr>
+            <tr>
+              <td class="userEntity">학과</td>
+              <td class="userValue">${ student.departmentName }</td>
+            	<td class="userEntity">이메일</td>
+              <td class="userValue">${ student.email }</td>
+            </tr>
+            <tr>
+              <td class="userEntity">핸드폰</td>
+              <td class="userValue">${ student.phoneNumber}</td>
+              <td class="userEntity">회원 유형</td>
+              <td class="userValue">${ student.userType }</td>
+            </tr>
+          </table>
+   	  </div>
+   	  <hr/>
+   	  <a href="${R}guest/userList?${pagination.queryString}"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-th-list"></i> 회원 목록으로</button></a>
    </div>
   	
-   <div class="row">
    <hr/>
     <div class="col-md-3" align="center">
       <img src="${R}img/skhuniv.jpg"/>

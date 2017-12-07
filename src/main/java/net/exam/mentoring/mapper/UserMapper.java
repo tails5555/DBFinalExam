@@ -9,6 +9,7 @@ import net.exam.mentoring.model.Pagination;
 @Mapper
 public interface UserMapper {
 	User findOne(int id);
+	User findByLogin(int id);
 	List<User> findAll(Pagination pagination);
 	int count(Pagination pagination);
 	User findLastUser();

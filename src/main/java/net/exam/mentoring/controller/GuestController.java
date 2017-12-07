@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.exam.mentoring.dto.Student;
+import net.exam.mentoring.dto.User;
 import net.exam.mentoring.model.Pagination;
 import net.exam.mentoring.service.DepartmentService;
 import net.exam.mentoring.service.StudentService;
@@ -40,6 +41,12 @@ public class GuestController {
 		model.addAttribute("searchBy", userService.getSearchBy());
 		model.addAttribute("orderBy", userService.getOrderBy());
 		return "guest/userList";
+	}
+	@RequestMapping("guest/userView")
+	public String userView(Model model, @RequestParam("id") int id, Pagination pagination) {
+		User user=userService.findOne(id);
+		model.addAttribute("student", user);
+		return "guest/userView";
 	}
 	@RequestMapping(value="guest/userApplication")
 	public String userApplication(Model model) {

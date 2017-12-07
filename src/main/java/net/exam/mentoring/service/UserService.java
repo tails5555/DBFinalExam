@@ -22,7 +22,7 @@ public class UserService {
 		Student student=studentMapper.findByStudentNumber(loginId);
 		if(student==null) return null;
 		String pw=Encryption.encrypt(password, Encryption.MD5);
-		User user=userMapper.findOne(student.getUserId());
+		User user=userMapper.findByLogin(student.getUserId());
 		if(user.getPassword().equals(pw)==false) return null;
 		user.setUserName(student.getName());
 		return user;
@@ -31,6 +31,9 @@ public class UserService {
 		int count=userMapper.count(pagination);
 		pagination.setRecordCount(count);
 		return userMapper.findAll(pagination);
+	}
+	public User findOne(int id) {
+		return userMapper.findOne(id);
 	}
 	public Option[] getOrderBy() {
 		return orderBy;

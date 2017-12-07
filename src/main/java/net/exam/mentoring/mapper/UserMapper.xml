@@ -5,7 +5,12 @@
 <mapper namespace="net.exam.mentoring.mapper.UserMapper">
 
   <select id="findOne" resultType="User">
-    SELECT * FROM User WHERE id=#{id}
+    SELECT u.id id, u.userType, s.studentNumber studentNumber, s.name studentName, s.grade grade, s.phoneNumber, s.email, d.departmentName departmentName
+	FROM User u LEFT JOIN Student s ON u.id=s.userId LEFT JOIN Department d ON s.departmentId=d.id
+	WHERE u.id=#{id}
+  </select>
+  <select id="findByLogin" resultType="User">
+  	SELECT * FROM User WHERE id=#{id}
   </select>
   <select id="findAll" resultType="User">
   	<bind name="start" value="(pg-1)*sz"/>
