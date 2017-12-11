@@ -12,38 +12,38 @@ import net.exam.mentoring.utils.Encryption;
 public class StudentService {
 	@Autowired StudentMapper studentMapper;
 	@Autowired UserMapper userMapper;
-	
+
 	public Student findOne(int id) {
 		return studentMapper.findOne(id);
 	}
-	
-	
+
+
 	public void update(User user,int id) {
-		
+
 		Student student = studentMapper.findOne(id);
-		
+
 		System.out.println(user.getEmail());
-			
-		
-		
+
+
+
 		student.setEmail(user.getEmail());
 		student.setGrade(user.getGrade());
 		student.setName(user.getStudentName());
 		student.setStudentNumber(user.getStudentNumber());
 		student.setPhoneNumber(user.getPhoneNumber());
-		
+
 		studentMapper.update(student);
-			
+
 	}
-	
-	
-	public void insert(Student student) {
+
+
+	public boolean insert(Student student) {
 		Student student1 = new Student();
 		student1=null;
 		student1=studentMapper.findByStudentNumber(student.getStudentNumber());
-		
+
 		if(student1!=null) {
-			
+			return false;
 		}
 		else {
 			User newUser=new User();
@@ -57,13 +57,14 @@ public class StudentService {
 			student.setUserId(lastUser.getId());
 			studentMapper.insert(student);
 		}
+		return true;
 	}
-	
+
 	public void delete(int id) {
 
 		studentMapper.delete(id);
 		userMapper.delete(id);
-		
-		
+
+
 	}
 }

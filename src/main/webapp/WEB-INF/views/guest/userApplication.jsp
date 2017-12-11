@@ -22,6 +22,22 @@
       	text-align : center;
       }
     </style>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="${R}res/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="${R}res/additional-methods.min.js"></script>
+	<script type="text/javascript" src="${R}res/messages_ko.js"></script>
+    <c:if test="${ param.fileError eq true }">
+	<script>
+		alert('현재 올린 파일에 문제가 있습니다. 다시 한번 확인하시길 바랍니다.');
+		document.location.replace('/DBFinalExam/guest/userApplication');      
+	</script>
+	</c:if>
+	   <c:if test="${ param.nonUnique eq true }">
+	<script>
+		alert('이미 등록된 학생이 엑셀에 있습니다. 엑셀 파일을 다시 확인하시길 바랍니다.');
+		document.location.replace('/DBFinalExam/guest/userApplication');
+	</script>
+	</c:if>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -47,10 +63,36 @@
    		<h1><strong>학생 등록</strong></h1>
    		<hr/>
    		<div class="form-group floating-label-form-group controls">
-	    <form method="post" enctype="multipart/form-data" action="${R}guest/excelUpload">
-	  	 <input type="file" name="uploadFile" multiple/><br/>
-	  	 <button type="submit" class="btn btn-primary">등록하기</button>
+	     <form method="post" enctype="multipart/form-data" action="${R}guest/excelUpload">
+	  	  <input type="file" name="uploadFile"/><br/>
+	  	  <button type="submit" class="btn btn-primary">등록하기</button>
 	     </form>
+	     <script>
+	    	$(function(){
+	    		$("form").validate({
+	    			submitHandler: function() {
+	                    var f = confirm("학생들을 등록하겠습니까?");
+	                    if(f){
+	                        return true;
+	                    } else {
+	                        return false;
+	                    }
+	                },
+	    			rules :{
+	    				uploadFile : {
+	    					required : true,
+	    					extension : 'xlsx'
+	    				}	
+	    			},
+	    			messages : {
+	    				uploadFile : {
+	                    	required : "엑셀 파일을 올려주세요.",
+	                    	extension : "엑셀 파일만 업로드 가능합니다."
+	                    }
+	    			}
+	    		})
+	    	})
+	    </script>
 	    </div>
    </div>
   
