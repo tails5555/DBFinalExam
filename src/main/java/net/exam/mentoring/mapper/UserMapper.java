@@ -15,4 +15,5 @@ public interface UserMapper {
 	User findLastUser();
 	void insert(User user);
 	void updateType(@Param("userType") String type, @Param("id") int id);
+	void delete(int id);
 }

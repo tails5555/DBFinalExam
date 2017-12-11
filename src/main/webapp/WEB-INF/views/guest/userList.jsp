@@ -69,6 +69,8 @@
 	            <th><center>이름</center></th>
 	            <th><center>학년</center></th>
 	            <th><center>회원 종류</center></th>
+	            <th style="width: 100px"><center>삭제</center></th>
+	            
 	          </tr>
 	        </thead>
 	        <tbody>
@@ -78,8 +80,17 @@
 	        			<td><center>${ user.departmentName }</center></td>
 	        			<td><center>${ user.studentName}</center></td>
 	        			<td><center>${ user.grade }</td>
-	        			<td><center>${ user.userType }</center>
+	        			<td><center>${ user.userType }</center></td> 	       	 
+	        			<td>
+	        			      		      <c:if test="${ user.id > 0 }">
+      <a href="delete.do?id=${ user.id }" class="btn btn-danger" data-confirm-delete>
+          <center>  <i class="glyphicon glyphicon-remove"></i> 삭제  </center></a>
+      </c:if>
+	        			</td>     			
 	        		</tr>
+	        		
+
+  
 	        	</c:forEach>
 	        </tbody>
 	     </table>

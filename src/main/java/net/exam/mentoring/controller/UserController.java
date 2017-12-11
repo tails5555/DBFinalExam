@@ -51,4 +51,7 @@ public class UserController {
 		mentiService.delete(id);
 		return "redirect:mentoInfo?id="+id;
 	}
+	
+   
+
 }

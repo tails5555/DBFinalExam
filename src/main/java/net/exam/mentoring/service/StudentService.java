@@ -12,16 +12,34 @@ import net.exam.mentoring.utils.Encryption;
 public class StudentService {
 	@Autowired StudentMapper studentMapper;
 	@Autowired UserMapper userMapper;
+	
 	public void insert(Student student) {
-		User newUser=new User();
-		String phone=student.getPhoneNumber();
-		int phoneLength=phone.length();
-		String password="a"+phone.substring(phoneLength-4, phoneLength);
-		newUser.setPassword(Encryption.encrypt(password, Encryption.MD5));
-		newUser.setUserType("학생");
-		userMapper.insert(newUser);
-		User lastUser=userMapper.findLastUser();
-		student.setUserId(lastUser.getId());
-		studentMapper.insert(student);
+		Student student1 = new Student();
+		student1=null;
+		student1=studentMapper.findByStudentNumber(student.getStudentNumber());
+		
+		if(student1!=null) {
+			
+		}
+		else {
+			User newUser=new User();
+			String phone=student.getPhoneNumber();
+			int phoneLength=phone.length();
+			String password="a"+phone.substring(phoneLength-4, phoneLength);
+			newUser.setPassword(Encryption.encrypt(password, Encryption.MD5));
+			newUser.setUserType("학생");
+			userMapper.insert(newUser);
+			User lastUser=userMapper.findLastUser();
+			student.setUserId(lastUser.getId());
+			studentMapper.insert(student);
+		}
+	}
+	
+	public void delete(int id) {
+
+		studentMapper.delete(id);
+		userMapper.delete(id);
+		
+		
 	}
 }

@@ -90,7 +90,14 @@
           </table>
    	  </div>
    	  <hr/>
+   	  
    	  <a href="${R}guest/userList?${pagination.queryString}"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-th-list"></i> 회원 목록으로</button></a>
+
+            <c:if test="${ student.id > 0 }">
+        <a href="delete.do?id=${ student.id }" class="btn btn-danger" data-confirm-delete>
+          <i class="glyphicon glyphicon-remove"></i> 삭제</a>
+      </c:if>
+
    </div>
   	
    <hr/>

@@ -16,4 +16,8 @@
   	INSERT INTO Student(studentNumber, name, phoneNumber, grade, email, departmentId, userId)
   	VALUES(#{studentNumber}, #{name}, #{phoneNumber}, #{grade}, #{email}, #{departmentId}, #{userId})
   </insert>
+    <delete id="delete">
+    DELETE FROM Student WHERE id = #{id}
+  </delete>
+  
 </mapper>

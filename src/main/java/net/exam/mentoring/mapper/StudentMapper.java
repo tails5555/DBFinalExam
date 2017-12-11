@@ -12,4 +12,5 @@ public interface StudentMapper {
 	Student findByStudentNumber(@Param("studentNumber") String studentNumber);
 	Student findOne(int id);
 	void insert(Student student);
+	void delete(int id);
 }

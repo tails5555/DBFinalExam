@@ -54,4 +54,9 @@
   	SET userType=#{userType}
   	WHERE id=#{id}
   </update>
+  
+    <delete id="delete">
+    DELETE FROM User WHERE id = #{id}
+  </delete>
+  
 </mapper>
