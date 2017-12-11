@@ -52,8 +52,8 @@ public class GuestController {
 	public String userApplication(Model model) {
 		return "guest/userApplication";
 	}
-	
-	
+
+
 	@RequestMapping(value="guest/excelUpload")
 	public String userApplication(@RequestParam("uploadFile") MultipartFile upload) {
 		if(upload.getSize()<=0) return "redirect:userApplication";
@@ -66,7 +66,7 @@ public class GuestController {
     		System.out.println(extractor.getText());
     		Sheet studentSheet=wb.getSheetAt(0);
     		int rowCount=studentSheet.getPhysicalNumberOfRows();
-    		for(int k=1;k<=rowCount;k++) {
+    		for(int k=1;k<rowCount;k++) {
     			Row row=studentSheet.getRow(k);
     			Student student=new Student();
     			Cell cell01=row.getCell(0);
@@ -89,7 +89,7 @@ public class GuestController {
 		}
 		return "redirect:userList?pg=1";
 	}
-	
+
     @RequestMapping(value="guest/delete")
     public String delete(Model model, @RequestParam("id") int id,Pagination pagination) {
         studentService.delete(id);
