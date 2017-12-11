@@ -57,6 +57,8 @@
         	</c:forEach>
         </tbody>
       </table>
+      <hr/>
+      <a href="${R}user/excelDownload"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 올해 멘토 목록 다운로드</button></a>
    </div>
    <div class="row">
    	<hr/>

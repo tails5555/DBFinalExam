@@ -1,5 +1,12 @@
 package net.exam.mentoring.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import net.exam.mentoring.dto.Mento;
+import net.exam.mentoring.service.ExcelService;
 import net.exam.mentoring.service.MentiService;
 import net.exam.mentoring.service.MentoService;
 
@@ -15,6 +23,7 @@ import net.exam.mentoring.service.MentoService;
 public class UserController {
 	@Autowired MentoService mentoService;
 	@Autowired MentiService mentiService;
+	@Autowired ExcelService excelService;
 	@RequestMapping("user/index")
 	public String index(Model model){
 		model.addAttribute("mentos", mentoService.findAll());
@@ -53,7 +62,16 @@ public class UserController {
 		mentiService.delete(id);
 		return "redirect:mentoInfo?id="+id;
 	}
-	
-   
+	@RequestMapping("user/excelDownload")
+	public void download(HttpServletResponse response) throws IOException{
+		Workbook workbook=excelService.createXLSX();
+		String fileName=URLEncoder.encode("2018_멘토_목록.xlsx", "UTF-8");
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ";");
+		try (BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream())) {
+			workbook.write(output);
+		}
+	}
+
 
 }
