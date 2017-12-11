@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="${R}res/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="${R}res/additional-methods.min.js"></script>
+	<script type="text/javascript" src="${R}res/messages_ko.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -96,16 +100,55 @@
 	    <h3>멘토 신청하시려면 밑에 신청 버튼을 눌러 주세요.</h3>
 	    <button id="btn_ok" type="submit" class="btn btn-primary" data-confirm-insert>신청</button>
 	    <script>
-		$(document).ready( function(){
-		    $("#btn_ok").click( function() {
-		        if(confirm("추가를 하면 수정이 불가능합니다. 계속 하시겠습니까??")) {
-		            $(this).parent().click();
-		        } else {
-		            return false;
-		        }
-		    });
-		});
-		</script>
+	    	$(function(){
+	    		$("form").validate({
+	    			submitHandler: function() {
+	                    var f = confirm("멘토 신청을 완료하겠습니까?");
+	                    if(f){
+	                        return true;
+	                    } else {
+	                        return false;
+	                    }
+	                },
+	    			rules :{
+	    				subject : {
+	    					required : true,
+	    					minlength : 3
+	    				},
+	    				teamName : {
+	    					required : true,
+	    					minlength : 8
+	    				},
+	    				advertiseContext : {
+	    					required : true,
+	    					minlength : 30
+	    				},
+	    				qualificContext : {
+	    					required : true,
+	    					minlength : 10
+	    				}	
+	    			},
+	    			messages : {
+	                    subject: {
+	                        required : "필수로 입력하세요",
+	                        minlength : "최소 {0}글자 이상이어야 합니다",
+	                    },
+	                    teamName: {
+	                        required : "필수로 입력하세요",
+	                        minlength : "최소 {0}글자 이상이어야 합니다"
+	                    },
+	                    advertiseContext: {
+	                        required : "필수로 입력하세요",
+	                        minlength : "최소 {0}글자 이상이어야 합니다",
+	                    },
+	                    qualificContext: {
+	                        required : "필수로 입력하세요",
+	                        minlength : "최소 {0}글자 이상이어야 합니다"
+	                    }
+	    			}
+	    		})
+	    	})
+	    </script>
 	   </div>
    	 </form:form>
    	</sec:authorize>
