@@ -10,4 +10,5 @@ public class Student {
 	String email;
 	int departmentId;
 	int userId;
+	String departmentName;
 }

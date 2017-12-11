@@ -14,6 +14,7 @@ public class User {
 	String phoneNumber;
 	String email;
 	String departmentName;
+	int departmentId;
 	int grade;
 
 }

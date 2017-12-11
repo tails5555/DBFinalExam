@@ -5,7 +5,7 @@
 <mapper namespace="net.exam.mentoring.mapper.StudentMapper">
 
   <select id="findOne" resultType="Student">
-    SELECT * FROM Student WHERE id=#{id}
+   SELECT s.* ,d.departmentName FROM Student s LEFT JOIN department d ON s.departmentId=d.id where s.id=#{id}
   </select>
   
   <select id="findByStudentNumber" resultType="Student">
@@ -19,5 +19,18 @@
     <delete id="delete">
     DELETE FROM Student WHERE id = #{id}
   </delete>
+  
+  <update id="update">
+  UPDATE Student SET
+    studentNumber = #{studentNumber},
+    name = #{name},
+    departmentId = #{departmentId},
+    grade = #{grade},
+    email =#{email},
+    phoneNumber=#{phoneNumber}    
+  WHERE id = #{id}
+</update>
+  
+  
   
 </mapper>

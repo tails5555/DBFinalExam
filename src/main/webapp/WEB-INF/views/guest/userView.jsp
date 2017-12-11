@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="${R}res/common.js"></script>
+    
     <style>
     .search{
         margin-top : 20px;
@@ -71,25 +76,66 @@
                 <center><img class="img-thumbnail img-responsive" src="${R}img/mento_photo.jpg" width="200" height="200"/></center>
               </td>
               <td class="userEntity">학번(교번, 직번)</td>
-              <td class="userValue">${ student.studentNumber }</td>
+              <td class="userValue">${ user.studentNumber }</td>
             	<td class="userEntity">이름</td>
-              <td class="userValue">${ student.studentName }</td>
+              <td class="userValue">${ user.studentName }</td>
             </tr>
             <tr>
               <td class="userEntity">학과</td>
-              <td class="userValue">${ student.departmentName }</td>
+              <td class="userValue">${ user.departmentName }</td>
             	<td class="userEntity">이메일</td>
-              <td class="userValue">${ student.email }</td>
+              <td class="userValue">${ user.email }</td>
             </tr>
             <tr>
               <td class="userEntity">핸드폰</td>
-              <td class="userValue">${ student.phoneNumber}</td>
+              <td class="userValue">${ user.phoneNumber}</td>
               <td class="userEntity">회원 유형</td>
-              <td class="userValue">${ student.userType }</td>
+              <td class="userValue">${ user.userType }</td>
             </tr>
           </table>
    	  </div>
+   	  
+ 
+<form:form method="post" modelAttribute="user">  
+    <div class="form-group">
+      <label>학번:</label>
+      <form:input path="studentNumber" class="form-control w200" />
+    </div>
+    <div class="form-group">
+      <label>이름:</label>
+      <form:input path="studentName" class="form-control w200" />
+    </div>
+    <div class="form-group">
+      <label>학과</label>
+      <form:select path="departmentId" class="form-control w200"
+                   itemValue="id" itemLabel="departmentName" items="${ departments }" />
+    </div>
+    <div class="form-group">
+      <label>학년:</label>
+      <form:input path="grade" class="form-control w200" />
+    </div>
+      <div class="form-group">
+      <label>핸드폰:</label>
+      <form:input path="phoneNumber" class="form-control w200" />
+    </div>
+      <div class="form-group">
+      <label>이메일:</label>
+      <form:input path="email" class="form-control w200" />
+    </div>
+    <hr />
+    <div>
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-ok"></span> 저장</button>
+
+  
+   
+
+        <br/>
+		
+   	  
    	  <hr/>
+   	  
+   	  
    	  
    	  <a href="${R}guest/userList?${pagination.queryString}"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-th-list"></i> 회원 목록으로</button></a>
 
@@ -97,7 +143,7 @@
         <a href="delete.do?id=${ student.id }" class="btn btn-danger" data-confirm-delete>
           <i class="glyphicon glyphicon-remove"></i> 삭제</a>
       </c:if>
-
+</form:form>
    </div>
   	
    <hr/>

@@ -26,11 +26,13 @@ public class UserController {
 		model.addAttribute("mento", mento);
 		return "user/mentoApplication";
 	}
+	
 	@RequestMapping(value="user/mentoApplication", method=RequestMethod.POST)
 	public String mentoApplication(Model model, Mento mento) {
 		mentoService.insert(mento);
 		return "redirect:index";
 	}
+	
 	@RequestMapping("user/mentoInfo")
 	public String mentoInfo(Model model, @RequestParam("id") int id) {
 		model.addAttribute("mento", mentoService.findOne(id));

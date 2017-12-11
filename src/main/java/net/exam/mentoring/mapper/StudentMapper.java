@@ -13,4 +13,5 @@ public interface StudentMapper {
 	Student findOne(int id);
 	void insert(Student student);
 	void delete(int id);
+	void update(Student student);
 }

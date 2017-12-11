@@ -12,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.exam.mentoring.dto.Student;
 import net.exam.mentoring.dto.User;
+import net.exam.mentoring.dto.Department;
 import net.exam.mentoring.model.Pagination;
 import net.exam.mentoring.service.DepartmentService;
 import net.exam.mentoring.service.StudentService;
@@ -42,12 +44,25 @@ public class GuestController {
 		model.addAttribute("orderBy", userService.getOrderBy());
 		return "guest/userList";
 	}
-	@RequestMapping("guest/userView")
+	
+	
+	@RequestMapping(value="guest/userView", method=RequestMethod.GET)
 	public String userView(Model model, @RequestParam("id") int id, Pagination pagination) {
-		User user=userService.findOne(id);
-		model.addAttribute("student", user);
+		
+		model.addAttribute("departments",departmentService.findAll());
+		
+		model.addAttribute("user",userService.findOne(id) );
 		return "guest/userView";
 	}
+	
+	@RequestMapping(value="guest/userView", method=RequestMethod.POST)
+	public String userView(Model model,User user, @RequestParam("id") int id, Pagination pagination) {
+
+		studentService.update(user,id);
+		
+		return "redirect:userView?id="+id+"&"+pagination.getQueryString();
+	}
+	
 	@RequestMapping(value="guest/userApplication")
 	public String userApplication(Model model) {
 		return "guest/userApplication";
