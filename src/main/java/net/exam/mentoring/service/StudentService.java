@@ -31,7 +31,7 @@ public class StudentService {
 		student.setName(user.getStudentName());
 		student.setStudentNumber(user.getStudentNumber());
 		student.setPhoneNumber(user.getPhoneNumber());
-
+		student.setDepartmentId(user.getDepartmentId());
 		studentMapper.update(student);
 
 	}
